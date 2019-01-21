@@ -3,3 +3,4 @@ node_modules
 .firebase
 *.js.html
 *.py
+!build/default/node_modules
