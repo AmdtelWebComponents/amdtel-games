@@ -36,80 +36,74 @@ export class GameElement extends LitElement {
     return css`
     :host {
     display: block;
-  }
-
-  :host([hidden]) {
-    display: none;
-  }
-
-  section {
-    display: grid;
-    grid-gap: 1rem;
-    
-    align-items: center;
-    justify-items: center;
-  }
-
-  .game-chooser {
-    grid-auto-rows: 4rem;
-  }
-  .game-chooser div {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    background: lightgrey;
-    justify-content: center;
-    align-items: center;
-  }
-  .intro {
-    background: black;
-    color: white;
-  }
-  .game-board {
-    height: 96vh;
-    grid-template-columns: 1fr;
-    grid-template-areas: 'menu-area' 'question-area' 'answer-area';
-  }
-  .question-area {
-    grid-area: question-area;
-    width: 32rem;
-    background-color: grey;
-    padding: 0.5rem;
-  }
-  .question-area img {
-    width: 100%;
-    height: 100%;
-  }
-  .btn {
-    margin-left: 0.25rem;
-    margin-right: 0.25rem;
-    width: 90%;
-    height: 75%;
-  }
-  .answer-area {
-    grid-area: answer-area;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: lightgreen;
-    height: 100%;
-    width: 100%;
-  }
-
-  .menu-area {
-    grid-area: menu-area;
-  }
-  .nav {
-    position: fixed;
-    top: 1rem;
-    right: 1rem;
-  }
-  @media screen and (max-width: 425px), screen and (max-height: 425px) {
-    .question-area {
-      width: 20rem;
     }
-  }
-    `
+
+    :host([hidden]) {
+      display: none;
+    }
+
+    section {
+      display: grid;
+      grid-gap: 1rem;
+      align-items: center;
+      justify-items: center;
+    }
+
+    .game-chooser {
+      grid-auto-rows: 4rem;
+    }
+    .game-chooser button {
+      width: 100%;
+      height: 80%;
+    }
+
+    .game-board {
+      height: 96vh;
+      grid-template-rows: 1fr 8fr 2fr;
+      grid-template-areas: 'menu-area' 'question-area' 'answer-area';
+    }
+    .question-area {
+      grid-area: question-area;
+      background-color: grey;
+      padding: 0.5rem;
+    }
+    .question-area img {
+      width: 100%;
+      height: 100%;
+    }
+    .btn {
+      margin-left: 0.25rem;
+      margin-right: 0.25rem;
+      width: 90%;
+      height: 75%;
+    }
+    .answer-area {
+      grid-area: answer-area;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: darkgreen;
+      height: 100%;
+      width: 100%;
+    }
+
+    .menu-area {
+      grid-area: menu-area;
+    }
+    .nav {
+      background: transparent;
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+    }
+    .nav:hover {
+      background: revert;
+    }
+    @media screen and (max-width: 425px), screen and (max-height: 425px) {
+      .question-area {
+        width: 20rem;
+      }
+    }`
   }
   
   render() {
@@ -117,7 +111,7 @@ export class GameElement extends LitElement {
 <section class="game-board">
   <div class="menu-area">
     <p>score: ${this.score}/${this.tries} time: ${this.timer}</p>
-    <div class="nav" @click="${()=>this.qstate=!this.qstate}">Menu...</div>
+    <button class="nav" @click="${()=>this.qstate=!this.qstate}">Menu...</button>
   </div>
   
   <div class="question-area">
@@ -136,14 +130,14 @@ ${this.answer ? html`
 </section>
 
 ` : html`
-<a class="nav" href="/">Exit...</a>
+<button class="nav" onclick="location.href='/'" type="button">Exit...</button>
 <section class="game-chooser">
   <div class="intro">Welcome to Whose Who!!! Pick a version to play...</div>
-  <div id="world-flags" @click="${this.loadAssets}">Whose World Flag</div>
-  <div id="us-state-flags" @click="${this.loadAssets}">Whose US State Flag</div>
-  <div>Whose International Football Strip</div>
-  <div>whose Premier League Football Strip</div>
-  <div>Whose International Rugby Union Strip</div>
+  <button id="world-flags" @click="${this.loadAssets}">Whose World Flag</button>
+  <button id="us-state-flags" @click="${this.loadAssets}">Whose US State Flag</button>
+  <button>Whose International Football Strip</button>
+  <button>whose Premier League Football Strip</button>
+  <button>Whose International Rugby Union Strip</button>
 </section>
 
 `}
@@ -199,7 +193,6 @@ ${this.answer ? html`
       this.gameAssets = data;
       this._pickRandomOption();
       this.qstate = true;
-      console.log(e);
     })
     .catch(e => console.log("fetch error:", e));
   }

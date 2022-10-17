@@ -20,18 +20,27 @@ export class GameApp extends LitElement {
     return css`
     :host { display: block; }
     :host([hidden]) { display: none; }
+
+    section {
+      display: grid;
+      grid-gap: 1rem;
+      align-items: center;
+      justify-items: center;
+    }
     `
   }
 
   render() {
     return html `
       ${this.game == '' ? html`
+      <section>
       <h1>Amdtel Game Selection</h1>
       
       ${this.games.map(
     (item) => html`
           <button id="${item.element}" @click="${this.loadGame}">${item.name}</button>
-        `)}`
+        `)}
+      </section>`
       : html`<game-element></game-element>`}
     `;
   }
@@ -46,11 +55,9 @@ export class GameApp extends LitElement {
   }
 
   async loadLazy() {
-    console.log('loadLazy');
     if(this.game != '' && !this.loadComplete) {
       this.loadComplete = true;
-      return import('./ge-' + this.game + '.js').then((GameElement) => {
-        console.log("LazyElement loaded");
+      return import(`./ge-${this.game}.js`).then((GameElement) => {
       }).catch((reason) => {
         console.log("LazyElement failed to load", reason);
       });
