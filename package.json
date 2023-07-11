@@ -1,25 +1,19 @@
 {
-  "name": "vite-project",
+  "name": "amdtel-games",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "main": "dist/my-element.es.js",
-  "exports": {
-    ".": "./dist/my-element.es.js"
-  },
-  "files": [
-    "dist"
-  ],
   "scripts": {
     "dev": "vite",
-    "build": "vite build"
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
-    "lit": "^2.3.1",
+    "lit": "^2.7.5",
     "open-props": "^1.4.16"
   },
   "devDependencies": {
     "postcss-jit-props": "^1.0.7",
-    "vite": "^3.1.0"
+    "vite": "^4.3.9"
   }
 }
