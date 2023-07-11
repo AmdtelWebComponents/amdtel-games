@@ -3,11 +3,6 @@
 @import 'open-props/normalize';
 @import 'open-props/buttons';
 
-html {
-  /* try on some alt gradients why dont ya! */
-  background-image: var(--gradient-18);
-}
-
 body {
   max-width: 65ch;
   margin: auto;
