@@ -1,15 +1,4 @@
-/**
- * @license
- * Copyright (c) 2018 The Polymer Project Authors. All rights reserved.
- * This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
- * The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
- * The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
- * Code distributed by Google as part of the polymer project is also
- * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
- */
-
-// Import LitElement base class and html helper function
-import { LitElement, html } from 'lit-element';
+import { LitElement, css, html } from 'lit';
 
 export class GameElement extends LitElement {
   
@@ -30,10 +19,7 @@ export class GameElement extends LitElement {
   }
   
   constructor(){
-    // Must call superconstructor first.
     super();
-
-    // Initialize properties
     this.outputMessage='Welcome to Whose flag is it';
     this.score=0;
     this.tries=0;
@@ -45,78 +31,87 @@ export class GameElement extends LitElement {
     this.game='';
     
   }
-  
-  /**
-   * Define a template for the new element by implementing LitElement's
-   * `render` function. `render` must return a lit-html TemplateResult.
-   */
-  render() {
-    return html `
-${this.qstate ? html`
 
-<style>
-  :host {
+  static get styles() {
+    return css`
+    :host {
     display: block;
-  }
-
-  :host([hidden]) {
-    display: none;
-  }
-
-  section {
-    height: 96vh;
-    display: grid;
-    grid-gap: 1rem;
-    grid-template-columns: 1fr;
-    grid-template-areas: 'menu-area' 'question-area' 'answer-area';
-    align-items: center;
-    justify-items: center;
-  }
-  .question-area {
-    grid-area: question-area;
-    width: 32rem;
-    background-color: grey;
-    padding: 0.5rem;
-  }
-  .question-area img {
-    width: 100%;
-    height: 100%;
-  }
-  .btn {
-    margin-left: 0.25rem;
-    margin-right: 0.25rem;
-    width: 90%;
-    height: 75%;
-  }
-  .answer-area {
-    grid-area: answer-area;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: lightgreen;
-    height: 100%;
-    width: 100%;
-  }
-
-  .menu-area {
-    grid-area: menu-area;
-  }
-  .nav {
-    position: fixed;
-    top: 1rem;
-    right: 1rem;
-  }
-  @media screen and (max-width: 425px), screen and (max-height: 425px) {
-    .question-area {
-      width: 20rem;
     }
-  }
-</style>
 
-<section>
+    :host([hidden]) {
+      display: none;
+    }
+
+    section {
+      display: grid;
+      grid-gap: 1rem;
+      align-items: center;
+      justify-items: center;
+    }
+
+    .game-chooser {
+      grid-auto-rows: 4rem;
+    }
+    .game-chooser button {
+      width: 100%;
+      height: 80%;
+    }
+
+    .game-board {
+      height: 96vh;
+      grid-template-rows: 1fr 8fr 2fr;
+      grid-template-areas: 'menu-area' 'question-area' 'answer-area';
+    }
+    .question-area {
+      grid-area: question-area;
+      background-color: grey;
+      padding: 0.5rem;
+    }
+    .question-area img {
+      width: 100%;
+      height: 100%;
+    }
+    .btn {
+      margin-left: 0.25rem;
+      margin-right: 0.25rem;
+      width: 90%;
+      height: 75%;
+    }
+    .answer-area {
+      grid-area: answer-area;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: darkgreen;
+      height: 100%;
+      width: 100%;
+    }
+
+    .menu-area {
+      grid-area: menu-area;
+    }
+    .nav {
+      background: transparent;
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+    }
+    .nav:hover {
+      background: revert;
+    }
+    @media screen and (max-width: 425px), screen and (max-height: 425px) {
+      .question-area {
+        width: 20rem;
+      }
+    }`
+  }
+  
+  render() {
+    return html `${this.qstate ? html`
+<section class="game-board">
   <div class="menu-area">
     <p>score: ${this.score}/${this.tries} time: ${this.timer}</p>
-    <div class="nav" @click="${()=>this.qstate=!this.qstate}">Menu...</div>
+    <button class="nav" @click="${()=>this.qstate=!this.qstate}">Menu...</button>
   </div>
   
   <div class="question-area">
@@ -135,54 +130,14 @@ ${this.answer ? html`
 </section>
 
 ` : html`
-<style>
-  :host {
-    display: block;
-  }
-
-  :host([hidden]) {
-    display: none;
-  }
-
-  section {
-    display: grid;
-    grid-gap: 1rem;
-    grid-auto-rows: 4rem;
-    align-items: center;
-    justify-items: center;
-  }
-  
-  section div {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    background: lightgrey;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .intro {
-    background: black;
-    color: white;
-  }
-  
-  .nav {
-    background: grey;
-    color: white;
-    position: fixed;
-    top: 1rem;
-    right: 1rem;
-  }
-</style>
-
-<a class="nav" href="/">Exit...</a>
-<section>
+<button class="nav" onclick="location.href='/'" type="button">Exit...</button>
+<section class="game-chooser">
   <div class="intro">Welcome to Whose Who!!! Pick a version to play...</div>
-  <div id="world-flags" @click="${this.loadAssets}">Whose World Flag</div>
-  <div id="us-state-flags" @click="${this.loadAssets}">Whose US State Flag</div>
-  <div>Whose International Football Strip</div>
-  <div>whose Premier League Football Strip</div>
-  <div>Whose International Rugby Union Strip</div>
+  <button id="world-flags" @click="${this.loadAssets}">Whose World Flag</button>
+  <button id="us-state-flags" @click="${this.loadAssets}">Whose US State Flag</button>
+  <button>Whose International Football Strip</button>
+  <button>whose Premier League Football Strip</button>
+  <button>Whose International Rugby Union Strip</button>
 </section>
 
 `}
@@ -231,17 +186,16 @@ ${this.answer ? html`
   }
   
   async loadAssets(e) {
-    this.game = e.path[0].id;
+    this.game = e.currentTarget.id;
     fetch('https://res.cloudinary.com/amdtel/raw/upload/game-assets/' + this.game + '/game-assets.json')
     .then(r => r.json())
     .then(data => {
       this.gameAssets = data;
       this._pickRandomOption();
       this.qstate = true;
-      console.log(e);
     })
     .catch(e => console.log("fetch error:", e));
   }
 }
-// Register the element with the browser
-customElements.define('game-element', GameElement);
+
+window.customElements.define('game-element', GameElement);
