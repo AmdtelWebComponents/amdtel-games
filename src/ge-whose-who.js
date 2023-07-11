@@ -186,7 +186,7 @@ ${this.answer ? html`
   }
   
   async loadAssets(e) {
-    this.game = e.path[0].id;
+    this.game = e.currentTarget.id;
     fetch('https://res.cloudinary.com/amdtel/raw/upload/game-assets/' + this.game + '/game-assets.json')
     .then(r => r.json())
     .then(data => {
