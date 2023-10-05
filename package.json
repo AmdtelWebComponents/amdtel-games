@@ -1,19 +1,15 @@
 {
-  "name": "amdtel-games",
-  "private": true,
-  "version": "0.0.0",
+  "name": "tmp",
   "type": "module",
+  "version": "0.0.1",
   "scripts": {
-    "dev": "vite --host",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
   },
   "dependencies": {
-    "lit": "^2.7.5",
-    "open-props": "^1.4.16"
-  },
-  "devDependencies": {
-    "postcss-jit-props": "^1.0.7",
-    "vite": "^4.3.9"
+    "astro": "^3.2.3"
   }
 }
