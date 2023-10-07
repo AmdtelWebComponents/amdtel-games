@@ -1,0 +1,12 @@
+---
+export function getStaticPaths() {
+  return [
+    {params: {game: 'world-flag'}},
+    {params: {game: 'state-flag'}},
+    {params: {game: 'world-ru-strip'}},
+  ];
+}
+
+const { game } = Astro.params;
+---
+<div>You picked {game} to play</div>
