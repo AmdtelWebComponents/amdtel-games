@@ -1,4 +1,6 @@
 ---
+import { GameElement } from '../../components/lit-game.js'
+
 export function getStaticPaths() {
   return [
     {params: {game: 'world-flags'}},
@@ -14,3 +16,5 @@ const data = await response.json();
 ---
 <div>You picked {data.title} to play</div>
 <p>{data.description}</p>
+
+<GameElement client:only ></GameElement>
