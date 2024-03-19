@@ -14,7 +14,5 @@ const response = await fetch('https://res.cloudinary.com/amdtel/raw/upload/game-
 const data = await response.json();
 
 ---
-<div>You picked {data.title} to play</div>
-<p>{data.description}</p>
 
 <GameElement client:only ></GameElement>
