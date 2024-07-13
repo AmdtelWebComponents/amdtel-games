@@ -1,0 +1,19 @@
+---
+import MainLayout from "../../../layouts/MainLayout.astro";
+---
+
+<MainLayout title="Space Invaders">
+  <script is:inline src="/assets/space-invaders/script.js"></script>
+  <h1>Space Invaders</h1>
+  <canvas id="board"></canvas>
+</MainLayout>
+
+<style>
+  body {
+    font-family:'Courier New', Courier, monospace;
+    text-align: center;
+  }
+  #board {
+    background-color: black;
+    }
+</style>
